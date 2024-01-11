@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+
+std::string lightStatus = "OFF";
+
+void toggleLight() {
+    lightStatus = (lightStatus == "OFF") ? "ON" : "OFF";
+}
+
+void displayStatus() {
+    std::cout << "Status: " << lightStatus << std::endl;
+}
+
+int main() {
+    std::cout << "Smart Light Controller\n";
+
+    int choice;
+
+    do {
+        std::cout << "\n1. Toggle Light\n";
+        std::cout << "2. Display Status\n";
+        std::cout << "3. Exit\n";
+        std::cout << "Choose an option: ";
+
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1:
+                toggleLight();
+                std::cout << "Light toggled.\n";
+                break;
+            case 2:
+                displayStatus();
+                break;
+            case 3:
+                std::cout << "Exiting.\n";
+                break;
+            default:
+                std::cout << "Invalid choice. Try again.\n";
+        }
+
+    } while (choice != 3);
+
+    return 0;
+}
+
