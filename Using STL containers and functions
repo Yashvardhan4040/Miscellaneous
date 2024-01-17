@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+
+int removeDuplicates(int arr[], int n) {
+    // Create a vector from the array
+    std::vector<int> vec(arr, arr + n);
+
+    // Use a set to store unique elements
+    std::set<int> uniqueSet(vec.begin(), vec.end());
+
+    // Copy unique elements back to the vector
+    vec.assign(uniqueSet.begin(), uniqueSet.end());
+
+    // Copy the unique elements back to the original array
+    std::copy(vec.begin(), vec.end(), arr);
+
+    // Return the new size of the array after removing duplicates
+    return vec.size();
+}
+
+int main() {
+    int arr[] = {1, 2, 2, 3, 4, 4, 4, 5, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    // removeDuplicates() returns the new size of the array after removing duplicates.
+    n = removeDuplicates(arr, n);
+
+    // Print the updated array without duplicates.
+    for (int i = 0; i < n; i++)
+        std::cout << arr[i] << " ";
+
+    return 0;
+}
