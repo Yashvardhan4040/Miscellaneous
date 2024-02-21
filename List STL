@@ -1,0 +1,69 @@
+#include <iostream>
+#include <list>
+#include <vector>
+
+int main() {
+    std::list<int> myList;
+
+    // Insert elements at the end of the list
+    myList.push_back(1);
+    myList.push_back(2);
+    myList.push_back(3);
+
+    // Insert an element at the beginning of the list
+    myList.push_front(0);
+
+    // Print the list after initial insertion
+    std::cout << "List after initial insertion:\n";
+    for (const auto& element : myList) {
+        std::cout << element << " ";
+    }
+    std::cout << std::endl;
+
+    // Insert an element at a specific position (in this case, after the second element)
+    auto it = myList.begin();
+    std::advance(it, 2);  // Advance iterator to the second position
+    myList.insert(it, 10);
+
+    // Print the list after inserting 10 after the second element
+    std::cout << "List after inserting 10 after the second element:\n";
+    for (const auto& element : myList) {
+        std::cout << element << " ";
+    }
+    std::cout << std::endl;
+
+    // Inserting at the beginning and end directly
+    myList.insert(myList.begin(), 100); // Insert at the beginning
+    myList.insert(myList.end(), 200);   // Insert at the end
+
+    // Print the list after inserting at the beginning and end
+    std::cout << "List after inserting 100 at the beginning and 200 at the end:\n";
+    for (const auto& element : myList) {
+        std::cout << element << " ";
+    }
+    std::cout << std::endl;
+
+    // Inserting multiple elements from a vector
+    std::vector<int> vec = {1000, 2000, 3000};
+    myList.insert(myList.begin(), vec.begin(), vec.end()); // Insert elements from vector at the beginning of the list
+
+    // Print the list after inserting elements from vector at the beginning
+    std::cout << "List after inserting elements from vector at the beginning:\n";
+    for (const auto& element : myList) {
+        std::cout << element << " ";
+    }
+    std::cout << std::endl;
+
+    // Inserting multiple elements from another list
+    std::list<int> anotherList = {4, 5, 6};
+    myList.insert(myList.begin(), anotherList.begin(), anotherList.end()); // Insert elements from another list at the beginning of the list
+
+    // Print the list after inserting elements from another list at the beginning
+    std::cout << "List after inserting elements from another list at the beginning:\n";
+    for (const auto& element : myList) {
+        std::cout << element << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
