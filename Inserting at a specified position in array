@@ -1,0 +1,20 @@
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> myVector = {1, 2, 3, 4, 5};
+    int positionToInsert = 2; // Position to insert
+    int elementToAdd = 10; // Value to insert
+
+    // Insert the new value at the specified position
+    myVector.insert(myVector.begin() + positionToInsert, elementToAdd);
+
+    // Print the vector after insertion
+    std::cout << "Vector after inserting " << elementToAdd << " at position " << positionToInsert << ":\n";
+    for (const auto& element : myVector) {
+        std::cout << element << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
