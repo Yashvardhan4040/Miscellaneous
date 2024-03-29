@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Application</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+    canvas {
+      border: 1px solid #ccc;
+    }
+    #resetButton {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #resetButton:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="800" height="700"></canvas>
+  <button id="resetButton">Reset</button>
+
+<script>
+  const canvas = document.getElementById('myCanvas');
+  const ctx = canvas.getContext('2d');
+  const resetButton = document.getElementById('resetButton');
+
+  const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00'];
+  const circleRadius = 40;
+  const circleX = 100;
+  const circleY = 200;
+  const circleMargin = 120;
+
+  // Draw circles and arrows
+  for (let i = 0; i < colors.length; i++) {
+    const circleColor = colors[i];
+    const circleYPos = circleY + (i * circleMargin);
+    const arrowX = circleX + circleRadius + 600; // Adjusted arrow X position
+    const arrowY = circleYPos;
+    
+    // Draw circle
+    ctx.beginPath();
+    ctx.arc(circleX, circleYPos, circleRadius, 0, Math.PI * 2);
+    ctx.fillStyle = circleColor;
+    ctx.fill();
+
+    // Draw arrow
+    drawArrow(arrowX, arrowY, arrowX - 50, arrowY); // Adjusted arrow direction
+
+    // Add click event listener to each circle
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Check if click is inside the circle
+      if (Math.sqrt((x - circleX) ** 2 + (y - circleYPos) ** 2) <= circleRadius) {
+        // Move arrow towards the circle
+        let arrowXPos = arrowX - 50;
+        const frameRate = 10;
+        const moveArrow = setInterval(() => {
+          ctx.clearRect(arrowX, arrowY - 10, arrowXPos - arrowX, 20); // Clear previous arrow position
+          arrowXPos -= 2;
+          drawArrow(arrowX, arrowY, arrowXPos, arrowY);
+          // Stop animation when arrow reaches target
+          if (arrowXPos <= circleX + circleRadius) {
+            clearInterval(moveArrow);
+            // Change circle color
+            ctx.beginPath();
+            ctx.arc(circleX, circleYPos, circleRadius, 0, Math.PI * 2);
+            ctx.fillStyle = 'orange';
+            ctx.fill();
+          }
+        }, frameRate);
+      }
+    });
+  }
+
+  // Reset button event listener
+  resetButton.addEventListener('click', () => {
+    location.reload();
+  });
+
+  // Function to draw arrow
+  function drawArrow(x1, y1, x2, y2) {
+    const headLength = 10;
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const angle = Math.atan2(dy, dx);
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x2 - headLength * Math.cos(angle - Math.PI / 6), y2 - headLength * Math.sin(angle - Math.PI / 6));
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - headLength * Math.cos(angle + Math.PI / 6), y2 - headLength * Math.sin(angle + Math.PI / 6));
+    ctx.stroke();
+  }
+</script>
+</body>
+</html>
